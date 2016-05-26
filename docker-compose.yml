@@ -1,0 +1,24 @@
+project:
+  build: ./docker/ubuntu
+  # ports:
+  #  - "80:80"
+  volumes:
+    - "./docker:/docker/"
+    - "./symfony/application/:/home/sites/www.project.org/"
+    - "./docker/apache/project.conf:/etc/apache2/sites-available/project.conf"
+  command: "/docker/scripts/run.sh"
+  container_name : project
+  working_dir: /home/sites/www.project.org/
+  links:
+    - project_mysql
+
+project_mysql:
+  image: mysql
+  container_name : project_mysql
+  environment:
+    MYSQL_DATABASE: project
+    MYSQL_ROOT_PASSWORD: root
+
+
+  
+
